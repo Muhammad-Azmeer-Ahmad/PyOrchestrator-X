@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>PyOrchestrator X</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body{
+font-family:'Poppins',sans-serif;
+background:radial-gradient(circle at top,#1f2937,#020617);
+color:#f9fafb;
+}
+
+.logo-glow{
+text-shadow:0 0 12px rgba(59,130,246,0.7);
+}
+
+.stat-card{
+background:linear-gradient(135deg,#1e293b,#0f172a);
+}
+
+.job-card{
+transition:all .25s ease;
+}
+
+.job-card:hover{
+transform:translateY(-6px) scale(1.02);
+box-shadow:0 18px 40px rgba(0,0,0,.5);
+}
+
+</style>
+
+</head>
+
+<body class="min-h-screen">
+
+<header class="border-b border-gray-700 backdrop-blur-md bg-gray-900/80">
+
+<div class="container mx-auto px-6 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+<h1 class="text-3xl font-bold text-blue-400 logo-glow flex items-center gap-3">
+<i class="fa-solid fa-robot"></i>
+PyOrchestrator X
+</h1>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+
+<div class="stat-card px-4 py-3 rounded-lg">
+<p class="text-gray-400">Total Jobs</p>
+<p class="text-xl font-bold text-blue-400">{{ total_jobs }}</p>
+</div>
+
+<div class="stat-card px-4 py-3 rounded-lg">
+<p class="text-gray-400">Active Jobs</p>
+<p class="text-xl font-bold text-green-400">{{ active_jobs }}</p>
+</div>
+
+<div class="stat-card px-4 py-3 rounded-lg">
+<p class="text-gray-400">Success Runs</p>
+<p class="text-xl font-bold text-green-400">{{ success_runs }}</p>
+</div>
+
+<div class="stat-card px-4 py-3 rounded-lg">
+<p class="text-gray-400">Failed Runs</p>
+<p class="text-xl font-bold text-red-400">{{ failed_runs }}</p>
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<main class="container mx-auto px-6 py-10">
+
+{% block content %}
+
+{% endblock %}
+
+</main>
+
+</body>
+</html>

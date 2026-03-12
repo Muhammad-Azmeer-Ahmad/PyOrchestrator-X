@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Tabs -->
+
+<div class="flex flex-wrap gap-3 mb-10">
+
+{% for tab_name, job_list in tabs %}
+
+<button
+class="px-5 py-2 rounded-full bg-gray-800 border border-gray-700 hover:bg-blue-600 transition text-sm font-medium shadow"
+onclick="showTab('{{ tab_name }}')">
+
+{{ tab_name|capfirst }}
+
+<span class="ml-2 bg-gray-900 px-2 py-1 rounded text-xs">
+{{ job_list.count }}
+</span>
+
+</button>
+
+{% endfor %}
+
+</div>
+
+
+<!-- Job Lists -->
+
+{% for tab_name, job_list in tabs %}
+
+<div id="tab-{{ tab_name }}"
+class="tab-content {% if not forloop.first %}hidden{% endif %} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+{% for job in job_list %}
+
+<div class="job-card bg-gray-800/90 backdrop-blur p-6 rounded-xl border border-gray-700 hover:border-blue-500">
+
+<h2 class="text-lg font-semibold text-blue-400 mb-1">
+
+<a href="{{ job.url }}" target="_blank" class="hover:underline">
+{{ job.title }}
+</a>
+
+</h2>
+
+<p class="text-gray-400 text-sm mb-2 flex items-center gap-2">
+<i class="fa-solid fa-building"></i>
+{{ job.company }}
+</p>
+
+<p class="text-gray-500 text-xs mb-4">
+{{ job.description|truncatewords:20 }}
+</p>
+
+<div class="flex justify-between items-center">
+
+<span class="text-xs px-3 py-1 rounded-full
+{{ job.is_remote|yesno:'bg-blue-600,bg-gray-700' }}">
+
+{% if job.is_remote %}
+<i class="fa-solid fa-house"></i> Remote
+{% else %}
+<i class="fa-solid fa-location-dot"></i> On-site
+{% endif %}
+
+</span>
+
+<label class="flex items-center gap-2 cursor-pointer text-sm">
+
+<input
+type="checkbox"
+class="apply-checkbox accent-green-500 w-5 h-5"
+data-job-id="{{ job.id }}"
+{% if job.applied_at %}checked{% endif %}
+/>
+
+<span class="text-gray-300">Applied</span>
+
+</label>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endfor %}
+
+
+<!-- Calendar -->
+
+<h2 class="mt-14 mb-4 text-xl font-bold flex items-center gap-2">
+<i class="fa-solid fa-chart-simple text-blue-400"></i>
+Jobs Activity (Last 7 Days)
+</h2>
+
+<div class="grid grid-cols-7 gap-4">
+
+{% for day in calendar %}
+
+<div class="bg-gray-800 p-3 rounded-lg flex flex-col items-center shadow">
+
+<div class="w-full bg-gray-700 rounded h-24 flex flex-col justify-end overflow-hidden">
+
+<div class="bg-blue-500 w-full"
+style="height: {{ day.scraped_count }}px"></div>
+
+<div class="bg-green-500 w-full"
+style="height: {{ day.applied_count }}px"></div>
+
+</div>
+
+<span class="text-xs mt-2 text-gray-400">
+{{ day.date }}
+</span>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+<script>
+
+function showTab(tab){
+
+document.querySelectorAll('.tab-content')
+.forEach(el=>el.classList.add('hidden'))
+
+document.getElementById('tab-'+tab)
+.classList.remove('hidden')
+
+window.scrollTo({top:0,behavior:'smooth'})
+
+}
+
+document.querySelectorAll(".apply-checkbox").forEach(cb=>{
+
+cb.addEventListener("change",function(){
+
+let jobId=this.dataset.jobId
+
+fetch(`/toggle-apply/${jobId}/`,{
+
+method:"POST",
+
+headers:{
+"X-CSRFToken":getCookie("csrftoken")
+}
+
+})
+
+})
+
+})
+
+function getCookie(name){
+
+let cookieValue=null
+
+if(document.cookie && document.cookie!=='')
+
+{
+
+let cookies=document.cookie.split(';')
+
+for(let i=0;i<cookies.length;i++)
+
+{
+
+let cookie=cookies[i].trim()
+
+if(cookie.substring(0,name.length+1)===name+'=')
+
+{
+
+cookieValue=decodeURIComponent(cookie.substring(name.length+1))
+break
+
+}
+
+}
+
+}
+
+return cookieValue
+
+}
+
+</script>
+
+{% endblock %}

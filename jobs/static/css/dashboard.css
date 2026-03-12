@@ -1,0 +1,30 @@
+.scraped-jobs h2 { font-size: 2rem; margin-top: 40px; margin-bottom: 20px; text-align: center; }
+.job-card {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.job-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); }
+.job-card h3 { font-size: 1.5rem; margin-bottom: 5px; }
+.job-card p { margin-bottom: 8px; }
+.job-card .badge { padding: 5px 10px; border-radius: 8px; margin-right: 5px; font-size: 0.9rem; }
+.job-card .remote { background: #16a34a; color: #fff; }
+.job-card .score { background: #2563eb; color: #fff; }
+.job-card.applied { border-left: 5px solid #facc15; background: #fef9c3; }
+.btn-view {
+    display: inline-block; padding: 8px 15px; border-radius: 8px;
+    background: #3b82f6; color: #fff; text-decoration: none;
+    font-weight: bold; transition: background 0.3s ease;
+}
+.btn-view:hover { background: #2563eb; }
+.tabs { display: flex; justify-content: center; margin-bottom: 20px; gap: 10px; flex-wrap: wrap; }
+.tab-link {
+    padding: 10px 20px; cursor: pointer; border-radius: 8px; background: #e5e7eb;
+    border: none; font-weight: bold; transition: background 0.3s ease;
+}
+.tab-link.active { background: #3b82f6; color: #fff; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
